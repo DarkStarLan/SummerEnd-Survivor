@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Stats/PlayerStats")]
+[CreateAssetMenu(menuName = "Stats/Player/PlayerStats")]
 public class PlayerStatsSO : ScriptableObject
 {
     [Header("Éú´æ")]
