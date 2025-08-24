@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1528236775957125298}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1397120469
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -1045041872, guid: bc547fa91db0c224d8994934b91be867, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -143,7 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9112671592000436412}
   - component: {fileID: 5837157366194019695}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WeaponPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,5 +177,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ebfaaf4963e7b3489927f251f5e9ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: 8da451b90f5fe9f408b0c2063e64fb1c, type: 2}
+  runtimeWeapon: {fileID: 0}
   pivot: {fileID: 9112671592000436412}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WeaponFormation : MonoBehaviour
 {
-    [SerializeField] private WeaponBaseSO weapon;  //武器数据
+    [ReadOnly] public WeaponBaseSO runtimeWeapon;  //武器数据
     [SerializeField] private Transform pivot;  //发射中心
     private readonly List<GameObject> points = new();
     private Transform tf;
@@ -11,9 +11,9 @@ public class WeaponFormation : MonoBehaviour
 
     void Start()
     {
-        this.nextFireTime = Time.time + (1f / weapon.fireRate);
-        RefreshFormation();
-        if (this.weapon.bulletStats.bulletType == BulletType.Null) this.nextFireTime = -1f;  //如果没有子弹类型，则不发射
+        this.nextFireTime = Time.time + (1f / runtimeWeapon.fireRate);
+        this.RefreshFormation();
+        if (this.runtimeWeapon.bulletStats == null) this.nextFireTime = -1f;  //如果没有子弹，则不发射
     }
 
     void Awake()
@@ -23,52 +23,66 @@ public class WeaponFormation : MonoBehaviour
 
     void Update()
     {
-        if (points.Count != this.weapon.projectileCount) RefreshFormation();
-        this.tf.Rotate(0, 0, this.weapon.rotationSpeed * Time.deltaTime);
+        if (Input.GetKeyDown(KeyCode.R)) this.GetComponent<WeaponUpgrade>()?.AddKill();  //测试用，按R升级武器
+
+        if (points.Count != this.runtimeWeapon.projectileCount) this.RefreshFormation();
+        this.tf.Rotate(0, 0, this.runtimeWeapon.rotationSpeed * Time.deltaTime);
 
         //发射子弹
         if (this.nextFireTime > 0f && Time.time >= this.nextFireTime)
         {
             foreach (var p in this.points)
             {
+                print(this.runtimeWeapon.bulletStats);
                 Fire(p.transform.position);  //发射子弹
             }
-            this.nextFireTime = Time.time + (1f / this.weapon.fireRate);  //用fireRate计算
+            this.nextFireTime = Time.time + (1f / this.runtimeWeapon.fireRate);  //用fireRate计算
         }
     }
 
-    void RefreshFormation()  //刷新阵型
+    public void RefreshFormation()  //刷新阵型
     {
-        foreach (var p in points) DestroyImmediate(p);
+        foreach (var p in points) Destroy(p);
         points.Clear();
 
-        if (this.weapon.shape == WeaponShape.Circle)  //圆形阵型
+        if (this.runtimeWeapon.shape == WeaponShape.Circle)  //圆形阵型
             ArrangeCircle();
+
+        this.ShowTrail(true);  //显示拖尾
     }
 
     void Fire(Vector2 pos)
     {
         Vector2 dir = (pos - (Vector2)this.pivot.position).normalized;
 
-        var bullet = MultiObjectPool.Instance.Get(this.weapon.bulletStats.bulletType);
+        var bullet = MultiObjectPool.Instance.Get(this.runtimeWeapon.bulletStats.bulletType.ToString());
         bullet.transform.position = pos;
         bullet.transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
-        bullet.GetComponent<Rigidbody2D>().velocity = dir * this.weapon.bulletStats.speed;
-        bullet.GetComponent<Bullet>().stats = this.weapon.bulletStats;  //设置子弹属性
+        bullet.GetComponent<Rigidbody2D>().velocity = dir * this.runtimeWeapon.bulletStats.speed;
+        bullet.GetComponent<Bullet>().stats = this.runtimeWeapon.bulletStats;  //设置子弹属性
     }
 
+    public void ShowTrail(bool show)
+    {
+        foreach (GameObject p in this.points)
+        {
+            var trail = p.transform.Find("TrailPoint").GetComponent<TrailRenderer>();
+            if (trail != null) trail.enabled = show;
+        }
+    }
 
     void ArrangeCircle()
     {
-        float step = 360f / this.weapon.projectileCount;
-        for (int i = 0; i < this.weapon.projectileCount; ++i)
+        float step = 360f / this.runtimeWeapon.projectileCount;
+        for (int i = 0; i < this.runtimeWeapon.projectileCount; ++i)
         {
             float angle = i * step * Mathf.Deg2Rad;
             Vector3 pos = this.pivot.position +
-                          new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * this.weapon.radius;
-            GameObject p = Instantiate(this.weapon.weaponPrefab, pos, Quaternion.identity, this.pivot);
+                          new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * this.runtimeWeapon.radius;
+            GameObject p = Instantiate(this.runtimeWeapon.weaponPrefab, pos, Quaternion.identity, this.pivot);
             Vector2 dir = (pos - this.pivot.position).normalized;
             p.transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
+            p.GetComponent<WeaponController>().weaponStats = this.runtimeWeapon;  //设置武器属性
             p.SetActive(true);
             points.Add(p);
         }

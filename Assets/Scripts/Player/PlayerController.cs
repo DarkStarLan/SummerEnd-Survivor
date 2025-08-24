@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PlayerStatsSO stats;
 
+    [Header("运动效果")]
+
     [Header("移动")]
     public float maxSpeed = 6f;
     public float acceleration = 22f;  //加速度
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour
         //平滑加速度：从当前速度插值到目标速度
         Vector2 targetVel = moveInput * maxSpeed;
         rb.velocity = Vector2.MoveTowards(rb.velocity, targetVel, acceleration * Time.fixedDeltaTime);
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;  //插值平滑
 
         this.speed = this.rb.velocity.magnitude;
     }

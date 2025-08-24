@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - Enemy
   - Weapon
   - Bullet
-  - 
+  - ExpOrb
   - 
   - 
   - 
@@ -40,4 +41,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1822312259
+    locked: 0
+  - name: Player
+    uniqueID: 2897846827
+    locked: 0
+  - name: Enemy
+    uniqueID: 1248962655
+    locked: 0
+  - name: Weapon
+    uniqueID: 2957600895
+    locked: 0
+  - name: Bullet
+    uniqueID: 2523048377
+    locked: 0
+  - name: Coin
+    uniqueID: 227667805
     locked: 0

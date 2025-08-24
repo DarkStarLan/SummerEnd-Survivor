@@ -15,10 +15,11 @@ MonoBehaviour:
   weaponName: Axe
   weaponPrefab: {fileID: 5999315118295518556, guid: 1303f9c3dc9bb5c459423b47d2d5e44a, type: 3}
   bulletStats: {fileID: 0}
+  fireRate: 1
   damage: 25
   cooldown: 1.2
-  range: 6
   shape: 1
   projectileCount: 3
   spacing: 30
+  radius: 2
   rotationSpeed: 90

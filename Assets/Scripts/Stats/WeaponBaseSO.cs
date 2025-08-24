@@ -19,7 +19,7 @@ public class WeaponBaseSO : ScriptableObject
     public WeaponShape shape = WeaponShape.Circle;
     public int projectileCount = 3;  //圆/线/锥用得到
     public float spacing = 30f;  //线或锥的角度间隔
-    public float radius = 5f;  //半径（单位：米）
+    public float radius = 2f;  //半径（单位：米）
     public float rotationSpeed = 90f;  //转速:度/秒
 }
 

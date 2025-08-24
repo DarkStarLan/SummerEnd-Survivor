@@ -17,6 +17,6 @@ public class BulletStatsSO : ScriptableObject
 
 public enum BulletType
 {
-    Null,     //ÎÞ
-    Fireball  //»ðÇò
+    Null,
+    Arrow
 }

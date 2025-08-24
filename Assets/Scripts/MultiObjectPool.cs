@@ -4,49 +4,59 @@ using UnityEngine;
 public class MultiObjectPool : MonoBehaviour
 {
     public static MultiObjectPool Instance { get; private set; }
+
     [System.Serializable]
-    private class PoolData
+    public class PoolItem
     {
-        public BulletType type;
+        public string key;  //任意字符串/枚举名
         public GameObject prefab;
-        public int initialSize = 20;
+        public int initialSize = 10;
     }
 
-    [SerializeField] private List<PoolData> pools;  //池列表
-    private readonly Dictionary<BulletType, Queue<GameObject>> poolDict = new();  //对象池字典
+    [SerializeField] private List<PoolItem> poolItems = new();
+    private readonly Dictionary<string, Queue<GameObject>> pools = new();
 
     void Awake()
     {
         Instance = this;
-        foreach (var p in pools)
-        {
-            poolDict[p.type] = new Queue<GameObject>();
-            for (int i = 0; i < p.initialSize; i++)
-                Expand(p.type, p.prefab);
-        }
+        foreach (var item in poolItems)
+            InitPool(item);
     }
 
-    private void Expand(BulletType type, GameObject prefab)
+    void InitPool(PoolItem item)
+    {
+        if (!pools.ContainsKey(item.key))
+            pools[item.key] = new Queue<GameObject>();
+
+        for (int i = 0; i < item.initialSize; ++i)
+            Expand(item.key, item.prefab);
+    }
+
+    void Expand(string key, GameObject prefab)
     {
         var obj = Instantiate(prefab, transform);
         obj.SetActive(false);
-        poolDict[type].Enqueue(obj);
+        pools[key].Enqueue(obj);
     }
 
-    public GameObject Get(BulletType type)
+    /* 取对象 */
+    public GameObject Get(string key, Vector2? pos = null)
     {
-        if (!poolDict.ContainsKey(type)) return null;
-        if (poolDict[type].Count == 0)
-            Expand(type, pools.Find(p => p.type == type).prefab);
-
-        var obj = poolDict[type].Dequeue();
+        if (!pools.TryGetValue(key, out var queue)) return null;
+        if (queue.Count == 0) Expand(key, poolItems.Find(p => p.key == key).prefab);
+        var obj = queue.Dequeue();
+        while (obj == null && queue.Count > 0)  //防止队列里有null
+            obj = queue.Dequeue();
         obj.SetActive(true);
+        if (pos.HasValue) obj.transform.position = pos.Value;
         return obj;
     }
 
-    public void Return(BulletType type, GameObject obj)
+    /* 回收对象 */
+    public void Return(string key, GameObject obj)
     {
         obj.SetActive(false);
-        poolDict[type].Enqueue(obj);
+        if (pools.TryGetValue(key, out var queue))
+            queue.Enqueue(obj);
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa2a0b0be086d940aeed91ff4899d9b, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
-  bulletName: Fireball
+  bulletName: Arrow
   bulletType: 1
   damage: 20
   speed: 10

@@ -14,12 +14,12 @@ public class Bullet : MonoBehaviour
     {
         this.timer += Time.deltaTime;
         if (this.timer >= this.stats.lifeTime)
-            MultiObjectPool.Instance.Return(this.stats.bulletType, gameObject);
+            MultiObjectPool.Instance.Return(this.stats.bulletType.ToString(), gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         // TODO£º¿ÛÑªÂß¼­
-        MultiObjectPool.Instance.Return(this.stats.bulletType, gameObject);
+        MultiObjectPool.Instance.Return(this.stats.bulletType.ToString(), gameObject);
     }
 }
