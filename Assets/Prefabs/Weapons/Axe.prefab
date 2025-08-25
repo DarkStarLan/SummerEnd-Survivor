@@ -4796,9 +4796,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1337366401
+  m_SortingLayer: 4
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -5081,6 +5081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponStats: {fileID: 0}
   hitEffect: {fileID: 5308256004193878512}
+  audioHit: {fileID: 0}
 --- !u!61 &388868150218644805
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5117,7 +5118,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.390625, y: 0.84375}
+    oldSize: {x: 0.4032258, y: 0.87096775}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

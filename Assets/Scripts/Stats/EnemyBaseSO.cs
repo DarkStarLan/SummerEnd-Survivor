@@ -11,7 +11,7 @@ public class EnemyBaseSO : ScriptableObject
     public float maxHP = 30f;
 
     [Header("战斗")]
-    public float damage = 10f;        //攻击/子弹伤害
+    public int damage = 10;        //攻击伤害
     public float attackRange = 2f;    //触发攻击的距离
     public float attackInterval = 1f; //两次攻击间隔
     public float moveSpeed = 2f;      //追击/飞行速度

@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponStats: {fileID: 0}
   hitEffect: {fileID: 4821645942182932594}
+  audioHit: {fileID: 8300000, guid: 37c6c43037aaabc448b8100ce3c235b4, type: 3}
 --- !u!61 &5295164116965630539
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -274,7 +275,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.28125, y: 0.625}
+    oldSize: {x: 0.29032257, y: 0.6451613}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -5079,9 +5080,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1337366401
+  m_SortingLayer: 4
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

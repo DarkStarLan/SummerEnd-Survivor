@@ -22,4 +22,4 @@ MonoBehaviour:
   projectileCount: 3
   spacing: 30
   radius: 2
-  rotationSpeed: 90
+  rotationSpeed: 70

@@ -47,14 +47,19 @@ public class MultiObjectPool : MonoBehaviour
         var obj = queue.Dequeue();
         while (obj == null && queue.Count > 0)  //防止队列里有null
             obj = queue.Dequeue();
+        if (pos.HasValue)
+        {
+            obj.transform.position = pos.Value;
+        }
         obj.SetActive(true);
-        if (pos.HasValue) obj.transform.position = pos.Value;
         return obj;
     }
 
     /* 回收对象 */
     public void Return(string key, GameObject obj)
     {
+        obj.transform.position = this.transform.position;
+        if (obj.GetComponent<Rigidbody2D>() != null) obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         obj.SetActive(false);
         if (pools.TryGetValue(key, out var queue))
             queue.Enqueue(obj);

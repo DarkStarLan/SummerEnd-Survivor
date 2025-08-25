@@ -62,12 +62,6 @@ public class PlayerController : MonoBehaviour
         this.speed = this.rb.velocity.magnitude;
     }
 
-    public void ReceiveDamage(float dmg)
-    {
-        stats.TakeDamage(dmg);
-        if (stats.currentHP <= 0) Debug.Log("Game Over");
-    }
-
     void OnDashInput(InputAction.CallbackContext _)
     {
         if (this.canDash && this.moveInput != Vector2.zero)

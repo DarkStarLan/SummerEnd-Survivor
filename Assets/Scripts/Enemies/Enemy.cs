@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;  //刚体组件
     [SerializeField] private LayerMask playerLayer;
     private float currentHP;
+    private bool isInvincible = true;  //是否无敌
+    private bool canAttack = true;  //是否可以攻击
 
     private Dictionary<EnemyStateType, IState> states = new Dictionary<EnemyStateType, IState>();
     private IState currentState;
@@ -19,7 +21,10 @@ public class Enemy : MonoBehaviour
 
     void OnEnable()
     {
+        this.transform.localScale = Vector3.one;
         this.runtimeStats = Instantiate(this.stats);  //实例化属性副本
+        this.isInvincible = true;  //重置无敌状态
+        StartCoroutine(this.CancelInvincible());
     }
 
     void OnDisable()
@@ -85,10 +90,12 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage, Vector2 hitDir)  //受到伤害
     {
+        if (this.isInvincible) return;  //无敌状态不受伤
         this.currentHP -= damage;
         if (this.currentHP <= 0)
         {
             this.currentHP = 0;
+            this.isInvincible = true;  //进入无敌状态，防止重复触发死亡
             this.TransitionState(EnemyStateType.Death);  //切换到死亡状态
         }
         else
@@ -112,8 +119,39 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        this.currentState = this.states[EnemyStateType.Idle];  //初始状态为空闲
+        anim.Rebind();  //重置动画，不然再次生成后无法正常渲染
+        ComboCounter.Instance.AddKill();  //通知连击系统
         MultiObjectPool.Instance.Return(this.runtimeStats.enemyName, gameObject);  //回收敌人对象
-        WeaponUpgrade.Instance.AddKill();  //通知武器升级系统
+        //WeaponUpgrade.Instance.AddKill();  //通知武器升级系统
+    }
+
+    private IEnumerator CancelInvincible()  //取消无敌状态
+    {
+        yield return new WaitForSeconds(0.5f);
+        this.isInvincible = false;
+    }
+
+    public void Attack()
+    {
+        if (this.player != null)
+        {
+            PlayerStats.Instance.TakeDamage(this.runtimeStats.damage);
+        }
+    }
+
+    public IEnumerator AttackCoroutine()
+    {
+        if (this.currentState == this.states[EnemyStateType.Attack])
+        {
+            if (this.canAttack)
+            {
+                this.Attack();
+                this.canAttack = false;
+            }
+        }
+        yield return new WaitForSeconds(this.runtimeStats.attackInterval);
+        this.canAttack = true;
     }
 
     void Start() => this.currentHP = runtimeStats.maxHP;

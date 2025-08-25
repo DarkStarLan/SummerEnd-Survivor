@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerStatsSO : ScriptableObject
 {
     [Header("生存")]
-    public float maxHP = 100f;
-    public float currentHP;
+    public int maxHP = 100;
+    public int currentHP;
 
     [Header("移动")]
     public float moveSpeed = 5f;
@@ -23,6 +23,6 @@ public class PlayerStatsSO : ScriptableObject
     public void TakeDamage(float damage)
     {
         float actualDamage = Mathf.Max(damage - armor, 0);
-        currentHP = Mathf.Clamp(currentHP - actualDamage, 0, maxHP);  //将数值限制在[0, maxHP]内
+        currentHP = (int)Mathf.Clamp(currentHP - actualDamage, 0, maxHP);  //将数值限制在[0, maxHP]内
     }
 }

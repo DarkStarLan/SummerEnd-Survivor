@@ -31,7 +31,8 @@ public class Spawner : MonoBehaviour
 
     private void SpawnOne()
     {
-        Vector3 spawnPos = ScreenEdgeRandomPos();
+        Vector3 spawnPos = this.ScreenEdgeRandomPos();
+
         EnemyBaseSO enemyType = wave.enemyTypes[Random.Range(0, wave.enemyTypes.Length)];
         GameObject go = MultiObjectPool.Instance.Get(enemyType.enemyName, spawnPos);  //从对象池获取敌人
     }

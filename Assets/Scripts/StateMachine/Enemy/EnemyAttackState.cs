@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyAttackState : IState
@@ -17,6 +18,7 @@ public class EnemyAttackState : IState
     public void OnUpdate()
     {
         this.enemy.GetPlayerTransform();
+        this.enemy.StartCoroutine(this.enemy.AttackCoroutine());
     }
 
     public void OnFixedUpdate()

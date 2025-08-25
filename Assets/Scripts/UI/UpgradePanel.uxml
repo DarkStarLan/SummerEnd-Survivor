@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+  <ui:VisualElement name="Root" style="flex-grow:1; background-color:rgba(0,0,0,0.8);">
+    <ui:Label text="选择天赋" style="font-size:32; color:white; unity-text-align:center; margin-bottom:10;" />
+    <ui:ScrollView name="Grid" style="flex-direction:row; flex-wrap:wrap; justify-content:center;">
+      <!-- 3 个按钮由脚本生成 -->
+    </ui:ScrollView>
+    <ui:Button name="RefreshBtn" text="刷新" style="width:200; height:60; margin-top:20; align-self:center;" />
+  </ui:VisualElement>
+</ui:UXML>

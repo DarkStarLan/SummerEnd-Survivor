@@ -14,6 +14,5 @@ public class PlayerWallet : MonoBehaviour
             case CurrencyType.Gold: gold += amount; break;
             case CurrencyType.Diamond: diamond += amount; break;
         }
-        Debug.Log($"{type} +{amount}");
     }
 }

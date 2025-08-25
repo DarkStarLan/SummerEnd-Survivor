@@ -23,8 +23,6 @@ public class WeaponFormation : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) this.GetComponent<WeaponUpgrade>()?.AddKill();  //≤‚ ‘”√£¨∞¥R…˝º∂Œ‰∆˜
-
         if (points.Count != this.runtimeWeapon.projectileCount) this.RefreshFormation();
         this.tf.Rotate(0, 0, this.runtimeWeapon.rotationSpeed * Time.deltaTime);
 
@@ -86,5 +84,33 @@ public class WeaponFormation : MonoBehaviour
             p.SetActive(true);
             points.Add(p);
         }
+    }
+
+    public void AddDamage(int dmg)
+    {
+        foreach (var p in points)
+        {
+            p.GetComponent<WeaponController>().weaponStats.damage += dmg;
+        }
+    }
+    public void AddRadius(float rad)
+    {
+        foreach (var p in points)
+        {
+            p.GetComponent<WeaponController>().weaponStats.radius += rad;
+        }
+        this.RefreshFormation();
+    }
+    public void AddRotationSpeed(float speed)
+    {
+        foreach (var p in points)
+        {
+            p.GetComponent<WeaponController>().weaponStats.rotationSpeed += speed;
+        }
+    }
+    public void AddProjectileCount(int count)
+    {
+        this.runtimeWeapon.projectileCount += count;
+        this.RefreshFormation();
     }
 }

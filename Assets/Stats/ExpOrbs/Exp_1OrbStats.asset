@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Exp_1OrbStats
   m_EditorClassIdentifier: 
   orbName: ExpOrb
-  lifeTime: 7
+  lifeTime: 12
   expValue: 1
-  autoMoveSpeed: 8
-  pickupRadius: 1
+  autoMoveSpeed: 9
+  pickupRadius: 1.4

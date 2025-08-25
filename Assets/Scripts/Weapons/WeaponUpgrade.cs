@@ -22,21 +22,23 @@ public class WeaponUpgrade : MonoBehaviour
         UpdateLevel();
     }
 
-    void UpdateLevel()
+    public void UpdateLevel()
     {
-        int newLevel = 0;
-        for (int i = 0; i < levelTable.killThreshold.Length; ++i)
-        {
-            if (killCount >= levelTable.killThreshold[i])
-                newLevel = i + 1;
-            else break;
-        }
+        this.currentLevel = PlayerStats.Instance.level - 1;  //等级从0开始
+        this.ApplyLevel();  //应用当前等级的属性
+        //int newLevel = 0;
+        //for (int i = 0; i < levelTable.killThreshold.Length; ++i)
+        //{
+        //    if (killCount >= levelTable.killThreshold[i])
+        //        newLevel = i + 1;
+        //    else break;
+        //}
 
-        if (newLevel != currentLevel)
-        {
-            currentLevel = newLevel;
-            ApplyLevel();
-        }
+        //if (newLevel != currentLevel)
+        //{
+        //    currentLevel = newLevel;
+        //    ApplyLevel();
+        //}
     }
 
     void ApplyLevel()  // Apply the current level's stats to the weapon
